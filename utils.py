@@ -4,7 +4,8 @@ import numpy as np
 import skimage.util
 import skimage.transform
 
-     
+
+# TODO (nripesh): add tests     
 def resize_image(im, new_size):
     # because rescale alters size, crop or pad to keep it consistent
     # assumes image is of dim 3
@@ -55,6 +56,10 @@ def resize_image(im, new_size):
     return im_resized
 
 
+# TODO (nripesh): add tests 
+# TODO : separate the image difference to different function
+#        with other differences also avaialble.
+# refactor to use the same transformation as in affine.
 def ssd_scale(scale_factor, im_fixed, im_moving, im_pad_size,
            xx=None, yy=None, gradient=False):
     # re-initialize if problematic
