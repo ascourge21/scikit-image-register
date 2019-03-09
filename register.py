@@ -28,7 +28,8 @@ def im_register_scale(im_fixed, im_moving,
     # random initialization and assignment
     scale_init = 1.25
     error_function = lambda x: utils.ssd_scale(
-        x, im_fixed, im_moving, pad_size)
+        x, im_fixed, im_moving, pad_size,
+        disp=options.get('disp', True))
     scale_optimized = scipy.optimize.minimize(
         error_function, scale_init, method='Nelder-Mead',
         options=options, jac=False)
@@ -62,7 +63,8 @@ def im_register_rotate(im_fixed, im_moving,
     # random initialization and assignment
     rotate_init = 0.2
     error_function = lambda x: utils.ssd_rotate(
-        x, im_fixed, im_moving, pad_size, show_figs=show_figs)
+        x, im_fixed, im_moving, pad_size, show_figs=show_figs,
+        disp=options.get('disp', True))
     scale_optimized = scipy.optimize.minimize(
         error_function, rotate_init, method='Nelder-Mead',
         options=options, jac=False)
@@ -77,7 +79,7 @@ def im_register_rotate(im_fixed, im_moving,
 
 
 def im_register_affine(im_fixed, im_moving,
-    pad_size=None, options={}, show_figs=False):
+                       pad_size=None, options={}, show_figs=False):
     """For registering using affine transformation.
     """
     if pad_size is None:

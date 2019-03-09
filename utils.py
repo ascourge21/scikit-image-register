@@ -62,7 +62,7 @@ def resize_image(im, new_size):
 
 
 def ssd_scale(scale_factor, im_fixed, im_moving, im_pad_size,
-              xx=None, yy=None, gradient=False):
+              xx=None, yy=None, gradient=False, disp=True):
     """SSD function only for scaling transformation.
 
         TODO (nripesh) : separate the image difference to different function
@@ -73,7 +73,8 @@ def ssd_scale(scale_factor, im_fixed, im_moving, im_pad_size,
     # re-initialize if problematic
     if scale_factor < 0:
         scale_factor = [np.abs(np.random.randn())]
-        print(scale_factor)
+        if disp:
+            print(scale_factor)
 
     im_moving_regis = skimage.transform.rescale(
         im_moving, scale=scale_factor, multichannel=True,
@@ -91,7 +92,8 @@ def ssd_scale(scale_factor, im_fixed, im_moving, im_pad_size,
             np.arange(im_pad_size[0]), np.arange(im_pad_size[1]))
 
     if not gradient:
-        print(scale_factor, ssd)
+        if disp:
+            print(scale_factor, ssd)
         return ssd
 
     grad = 0
@@ -113,7 +115,7 @@ def ssd_scale(scale_factor, im_fixed, im_moving, im_pad_size,
 
 
 def ssd_rotate(angle, im_fixed, im_moving, im_pad_size,
-               show_figs=False):
+               show_figs=False, disp=True):
     """Rotate SSD.
 
     @param angle: angle to rotate in radians.
@@ -135,7 +137,8 @@ def ssd_rotate(angle, im_fixed, im_moving, im_pad_size,
     q1 = im_fixed - im_movig_regis
     ssd = np.sum(np.square(q1)) / (row * col * channel)
 
-    print(angle, ssd)
+    if disp:
+        print(angle, ssd)
 
     if show_figs:
         plt.figure(1)
