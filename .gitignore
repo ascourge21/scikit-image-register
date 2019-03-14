@@ -5,6 +5,10 @@ __pycache__/
 *.pyd
 notebooks/.ipynb_checkpoints/*
 
+# images
+.png
+.jpg
+
 # C extensions
 *.so
 
