@@ -19,8 +19,8 @@ def _image_interp_rbf(Image, dx, dy, pad_pct=0, upsample_factor=1):
     shift = np.array([xx.shape[0], xx.shape[1], 0]).T / 2
     shift = np.reshape(shift, (len(shift), 1))
 
-    x_out = x_in + dx - shift[0]
-    y_out = y_in + dy - shift[1]
+    x_out = x_in + dx.flatten() - shift[0]
+    y_out = y_in + dy.flatten() - shift[1]
 
     im_max = Image.max()
     Image = Image / im_max
@@ -95,12 +95,9 @@ def _image_interp_warp(Image, dx, dy):
     xx, yy = np.meshgrid(x_range, y_range)
     x_in, y_in = xx.flatten(), yy.flatten()
 
-    shift = np.array([xx.shape[1], xx.shape[0], 0]).T / 2
-    shift = np.reshape(shift, (len(shift), 1))
-
     # coords in output space
-    x_out = x_in - shift[0] + dx
-    y_out = y_in - shift[1] + dy
+    x_out = x_in + dx.flatten()
+    y_out = y_in + dy.flatten()
 
     x_out = np.expand_dims(x_out, 1),
     y_out = np.expand_dims(y_out, 1)
